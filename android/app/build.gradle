@@ -121,6 +121,15 @@ android {
         aidl true
     }
 
+    // Compress native libs inside the APK (.so are stored uncompressed by default).
+    // The Go core lib alone shrinks ~80MB -> ~24MB, nearly halving the APK download.
+    // Trade-off: libs are extracted at install time (slightly more disk / install time).
+    packagingOptions {
+        jniLibs {
+            useLegacyPackaging = true
+        }
+    }
+
 }
 
 android.applicationVariants.all { variant ->
